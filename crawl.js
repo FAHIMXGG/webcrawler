@@ -7,10 +7,22 @@ function getURLsFromHTML(htmlBody, basURL){
     for (const linkElement of linkElements){
         if (linkElement.href.slice(0, 1) === '/'){
             //relative
-            urls.push(`${basURL}${linkElement.href}`)
+            try{
+                const urlObj = new URL(`${basURL}${linkElement.href}`)
+            urls.push(urlObj.href)
+            } catch (err){
+                console.log(`error ${err.message}`)
+            }
+            
         }else{
             //ab
-            urls.push(linkElement.href)
+            try{
+                const urlObj = new URL(linkElement.href)
+            urls.push(urlObj.href)
+            } catch (err){
+                console.log(`error abs ${err.message}`)
+            }
+            
         }
         
     }
